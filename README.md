@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -57,3 +58,197 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
+
+
+
+# 🏢 Système de Gestion Immobilière
+
+Application web complète de gestion immobilière développée avec **Laravel** et stylisée avec **Tailwind CSS**.
+
+---
+
+## 📖 Description
+
+Ce projet est une solution de gestion immobilière permettant d’administrer les biens, les propriétaires, les locataires, les contrats de location, les paiements et la maintenance.
+
+Il vise à digitaliser et simplifier la gestion des biens immobiliers afin d’améliorer l’organisation, la transparence et l’efficacité.
+
+---
+
+## 🚀 Technologies utilisées
+
+- Laravel
+- PHP
+- MySQL
+- Tailwind CSS
+- JavaScript
+
+---
+
+## 🧩 Fonctionnalités principales
+
+- Gestion des utilisateurs (admin, agent, propriétaire, locataire)
+- Gestion des biens immobiliers
+- Gestion des unités (appartements, bureaux, etc.)
+- Gestion des contrats de location
+- Suivi des paiements
+- Génération des factures
+- Gestion des maintenances et interventions
+- Gestion des images et documents
+- Système de notifications
+
+---
+
+## 🗄️ Structure de la base de données
+
+### 👤 utilisateurs
+- id  
+- nom  
+- telephone  
+- adresse  
+- email  
+- mot_de_passe  
+- role (admin, agent, proprietaire, locataire)  
+- created_at  
+- updated_at  
+
+---
+
+### 🏠 proprietaires
+- id  
+- utilisateur_id  
+
+---
+
+### 👥 locataires
+- id  
+- utilisateur_id  
+
+---
+
+### 🏡 biens
+- id  
+- proprietaire_id  
+- titre  
+- description  
+- type (maison, appartement, terrain, bureau)  
+- adresse  
+- ville  
+- pays  
+- prix  
+- statut (disponible, loue, vendu)  
+
+---
+
+### 🏢 unites
+- id  
+- bien_id  
+- nom  
+- nombre_chambres  
+- prix  
+- statut  
+
+---
+
+### 📑 contrats
+- id  
+- bien_id / unite_id  
+- locataire_id  
+- date_debut  
+- date_fin  
+- loyer  
+- caution  
+- statut  
+
+---
+
+### 💰 paiements
+- id  
+- contrat_id  
+- montant  
+- date_paiement  
+- methode  
+- statut  
+
+---
+
+### 🧾 factures
+- id  
+- contrat_id  
+- montant  
+- date_emission  
+- date_echeance  
+- statut  
+
+---
+
+### 🔧 maintenances
+- id  
+- bien_id  
+- locataire_id  
+- description  
+- statut  
+- date_demande  
+
+---
+
+### 🛠️ interventions
+- id  
+- maintenance_id  
+- technicien  
+- cout  
+- date_intervention  
+
+---
+
+### 📸 images_biens
+- id  
+- bien_id  
+- chemin_image  
+
+---
+
+### 📍 visites
+- id  
+- bien_id  
+- nom_client  
+- date_visite  
+
+---
+
+### 📝 documents
+- id  
+- bien_id  
+- type  
+- fichier  
+
+---
+
+### 🔔 notifications
+- id  
+- utilisateur_id  
+- message  
+- lu  
+
+---
+
+## 🔗 Relations importantes
+
+- 1 propriétaire → plusieurs biens  
+- 1 bien → plusieurs unités  
+- 1 locataire → plusieurs contrats  
+- 1 contrat → plusieurs paiements  
+- 1 bien → plusieurs images  
+
+---
+
+## ⚙️ Installation du projet
+
+### 1. Cloner le projet
+```bash
+git clone https://github.com/TON_USERNAME/TON_REPO.git
+cd TON_REPO
