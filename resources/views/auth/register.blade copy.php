@@ -1,41 +1,18 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
-   
+        @csrf
+
+        <!-- - nom
+- telephone
+- adresse
+- email
+- mot_de_passe
+- role (admin, agent, proprietaire, locataire) -->
+        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-
-
-        
-        <!-- adresse -->
-        <div>
-            <x-input-label for="adresse" :value="__('Adresse')" />
-            <x-text-input id="adresse" class="block mt-1 w-full" type="text" name="adresse" :value="old('adresse')" required autofocus autocomplete="adresse" />
-            <x-input-error :messages="$errors->get('adresse')" class="mt-2" />
-        </div>
-
-        <!-- phone -->
-        <div>
-            <label for="phone" class="text-sm">Phone</label>
-            <input type="text" name="phone" id="phone" 
-            class="block mt-1 w-full rounded-lg" required autofocus autocomplete="tel">
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-        </div>
-
-
-        <!-- role -->
-        <div class="mt-4">
-            <select name="role" id="role" class="block mt-1 w-full rounded-lg" required>
-                
-                <option value= "role">Role</option>
-                <option value="admin">admin</option>
-                <option value="agent">agent</option>
-                <option value="proprietaire">proprietaire</option>
-                <option value="locataire">locataire</option>
-            </select>
-
         </div>
 
         <!-- Email Address -->
@@ -45,10 +22,10 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
+
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
