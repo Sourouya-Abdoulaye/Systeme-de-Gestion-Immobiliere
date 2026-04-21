@@ -6,9 +6,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -41,6 +41,8 @@ Route::get("envoyer/email", function () {
 
 
 
+
+
 // Les biens Pour les administrateurs
 Route::prefix("admin")
     // ->middleware("auth")
@@ -53,7 +55,7 @@ Route::prefix("admin")
         Route::get("/biens/{id}", [BienController::class, "show"])->name("bien.show");
         Route::get("/biens/{id}/edit", [BienController::class, "edit"])->name("bien.edit");
         Route::put("/biens/{id}", [BienController::class, "update"])->name("bien.update");
-        Route::delete("/biens/{id}", [BienController::class, "destroy"])->name("bien.destroy");
+        Route::delete("/biens/{id}", [BienController::class, "destroy"])->name("bien.delete");
 
     });
 
@@ -64,6 +66,10 @@ Route::prefix("admin")
 
 
 
+
+
+// pour les users
+Route::get("/", [BienController::class, "index"])->name("bien.index");
 
 
 

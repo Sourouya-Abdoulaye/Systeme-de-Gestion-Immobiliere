@@ -33,7 +33,7 @@
       <a class="hover:text-white" href="#">Biens</a>
       <a class="hover:text-white" href="#">Services</a>
       <a class="hover:text-white" href="#">Contact</a>
-	  <a class="hover:text-white" href="#">Se connecter</a>
+	  <a class="hover:text-white" href="/login">Se connecter</a>
     </nav>
 
     <button onclick="toggleMenu()" class="md:hidden text-2xl">☰</button>

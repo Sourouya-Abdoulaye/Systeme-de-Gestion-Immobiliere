@@ -13,7 +13,7 @@ class BienController extends Controller
     {
         //
         // echo "Liste des biens immobiliers";
-        return view("admin.biens.index");
+        return view("index");
     }
 
     /**

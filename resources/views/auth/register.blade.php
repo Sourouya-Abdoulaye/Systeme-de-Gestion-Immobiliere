@@ -1,13 +1,13 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
-   
+        @csrf
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-
+        
         
         <!-- adresse -->
         <div>
@@ -16,27 +16,38 @@
             <x-input-error :messages="$errors->get('adresse')" class="mt-2" />
         </div>
 
+        <!-- gender -->
+        <div class="mt-4">
+            <select name="gender" id="gender" class="block text-sm mt-1 w-full rounded-md" required>
+                <option value= "">Gender</option>
+                <option value="F" {{ old('gender')=='F' ? 'selected' : '' }} >F</option>
+                <option value="M"  {{old('gender')=='M' ? 'selected' : '' }} >M</option>
+            </select>
+            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+        </div>
+
         <!-- phone -->
         <div>
             <label for="phone" class="text-sm">Phone</label>
-            <input type="text" name="phone" id="phone" 
-            class="block mt-1 w-full rounded-lg" required autofocus autocomplete="tel">
+            <input type="text" name="phone" id="phone" value= "{{ old('phone') }} " 
+            class="block mt-1 w-full  rounded-md"  autofocus autocomplete="tel">
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
 
 
         <!-- role -->
         <div class="mt-4">
-            <select name="role" id="role" class="block mt-1 w-full rounded-lg" required>
-                
-                <option value= "role">Role</option>
-                <option value="admin">admin</option>
-                <option value="agent">agent</option>
-                <option value="proprietaire">proprietaire</option>
-                <option value="locataire">locataire</option>
-            </select>
+            <select name="role" id="role" class="block mt-1 w-full rounded-md" required>  
+                <option value="">Role</option>
 
+                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>admin</option>
+                <option value="agent" {{ old('role') == 'agent' ? 'selected' : '' }}>agent</option>
+                <option value="proprietaire" {{ old('role') == 'proprietaire' ? 'selected' : '' }}>proprietaire</option>
+                <option value="locataire" {{ old('role') == 'locataire' ? 'selected' : '' }}>locataire</option>
+            </select>
         </div>
+
+        
 
         <!-- Email Address -->
         <div class="mt-4">
