@@ -250,5 +250,5 @@ Il vise à digitaliser et simplifier la gestion des biens immobiliers afin d’a
 
 ### 1. Cloner le projet
 ```bash
-git clone https://github.com/TON_USERNAME/TON_REPO.git
-cd TON_REPO
+git clone https://github.com/Sourouya-Abdoulaye/Systeme-de-Gestion-Immobiliere.git
+cd Systeme-de-Gestion-Immobiliere
