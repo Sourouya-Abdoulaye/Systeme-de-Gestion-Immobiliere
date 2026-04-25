@@ -189,7 +189,7 @@
                                     <td class="p-3 text-right space-x-2">
 
                                         <!-- SHOW -->
-                                         <a href="#bien.show">
+                                        <a href="{{route('bien.show',['id'=>1])}}">
                                             <button class="text-blue-600 hover:text-blue-800">
                                                 <i data-lucide="eye" class="w-5 h-5"></i>
                                             </button>
@@ -226,9 +226,9 @@
                                     <td class="p-3 text-right space-x-2">
 
                                         <!-- SHOW -->
-                                         <a href="#bien.show">
+                                         <a href="{{route('bien.show',['id'=>23])}}">
                                             <button class="text-blue-600 hover:text-blue-800">
-                                                <i data-lucide="eye" class="w-5 h-5"></i>
+                                                S<i data-lucide="eye" class="w-5 h-5"></i>
                                             </button>
                                          </a>
                                         
@@ -236,7 +236,7 @@
                                         <!-- UPDATE -->
                                           <a href="{{route('admin.bien.edit',['id'=>23])}}">
                                             <button class="text-blue-600 hover:text-blue-800">
-                                                 <i data-lucide="edit-3" class="w-5 h-5"></i>
+                                                U<i data-lucide="edit-3" class="w-5 h-5"></i>
                                             </button>
                                          </a>
 
@@ -246,7 +246,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button class="text-red-600 hover:text-red-800">
-                                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                D<i data-lucide="trash-2" class="w-5 h-5"></i>
                                             </button type="submit">
                                         </form>
                                     </td>

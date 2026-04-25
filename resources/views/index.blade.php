@@ -33,6 +33,7 @@
       <a class="hover:text-white" href="#">Biens</a>
       <a class="hover:text-white" href="#">Services</a>
       <a class="hover:text-white" href="#">Contact</a>
+      <a class="hover:text-white" href="{{route('dashboard')}}">Dasboard</a>
 	  <a class="hover:text-white" href="/login">Se connecter</a>
     </nav>
 
@@ -47,7 +48,7 @@
       <a class="py-3 border-b border-blue-800">Biens</a>
       <a class="py-3 border-b border-blue-800">Services</a>
       <a class="py-3">Contact</a>
-	  <a class="hover:text-white" href="#">Se connecter</a>
+	  <a class="hover:text-white" href="/login">Se connecter</a>
     </div>
   </div>
 

@@ -50,14 +50,13 @@ Route::prefix("admin")
     ->group(function () {
 
         Route::get("/biens", [BienController::class, "index"])->name("bien.index");
-        Route::get("/biens/create", [BienController::class, "create"])->name("bien.create");
-        Route::post("/biens", [BienController::class, "store"])->name("bien.store");
-        Route::get("/biens/{id}", [BienController::class, "show"])->name("bien.show");
-        Route::get("/biens/{id}/edit", [BienController::class, "edit"])->name("bien.edit");
-        Route::put("/biens/{id}", [BienController::class, "update"])->name("bien.update");
-        Route::delete("/biens/{id}", [BienController::class, "destroy"])->name("bien.delete");
+        Route::get("/bien/create", [BienController::class, "create"])->name("bien.create");
+        Route::post("/bien", [BienController::class, "store"])->name("bien.store");
+        Route::get("/bien/{id}/edit", [BienController::class, "edit"])->name("bien.edit");
+        Route::put("/bien/{id}", [BienController::class, "update"])->name("bien.update");
+        Route::delete("/bien/{id}", [BienController::class, "destroy"])->name("bien.delete");
 
-    });
+    })->middleware('Auth');
 
 // Route::resource("admin/biens", BienController::class); //->middleware("auth")->names("admin.biens");
 
@@ -70,7 +69,7 @@ Route::prefix("admin")
 
 // pour les users
 Route::get("/", [BienController::class, "index"])->name("bien.index");
-
+Route::get("/biens/{id}", [BienController::class, "show"])->name("bien.show");
 
 
 
