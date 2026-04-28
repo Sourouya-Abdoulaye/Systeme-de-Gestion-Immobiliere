@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Bien;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BienController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProposController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -10,9 +11,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[AdminController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -45,18 +44,18 @@ Route::get("envoyer/email", function () {
 
 // Les biens Pour les administrateurs
 Route::prefix("admin")
-    // ->middleware("auth")
+    ->middleware("auth")
     ->name("admin.")
     ->group(function () {
 
-        Route::get("/biens", [BienController::class, "index"])->name("bien.index");
-        Route::get("/bien/create", [BienController::class, "create"])->name("bien.create");
-        Route::post("/bien", [BienController::class, "store"])->name("bien.store");
-        Route::get("/bien/{id}/edit", [BienController::class, "edit"])->name("bien.edit");
-        Route::put("/bien/{id}", [BienController::class, "update"])->name("bien.update");
-        Route::delete("/bien/{id}", [BienController::class, "destroy"])->name("bien.delete");
+        Route::get("/biens", [BienController::class, "index"])->name("biens.index");
+        Route::get("/biens/create", [BienController::class, "create"])->name("biens.create");
+        Route::post("/biens", [BienController::class, "store"])->name("biens.store");
+        Route::get("/biens/{id}/edit", [BienController::class, "edit"])->name("biens.edit");
+        Route::put("/biens/{id}", [BienController::class, "update"])->name("biens.update");
+        Route::delete("/biens/{id}", [BienController::class, "destroy"])->name("biens.delete");
 
-    })->middleware('Auth');
+    });
 
 // Route::resource("admin/biens", BienController::class); //->middleware("auth")->names("admin.biens");
 
@@ -68,8 +67,15 @@ Route::prefix("admin")
 
 
 // pour les users
-Route::get("/", [BienController::class, "index"])->name("bien.index");
-Route::get("/biens/{id}", [BienController::class, "show"])->name("bien.show");
+Route::get("/", [BienController::class, "index"])->name("biens.index");
+Route::get("/biens/{id}", [BienController::class, "show"])->name("biens.show");
+
+
+
+
+// propos
+Route::get("/contact", [ProposController::class, "contact"])->name("contact");
+Route::post("/send/email", [ProposController::class, "sendMessage"])->name("contact.send");
 
 
 

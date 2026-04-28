@@ -16,8 +16,6 @@ return new class extends Migration
             $table->integer("bien_id")->nullable(false);
             $table->string("url")->nullable(false);
             $table->foreign("bien_id")->references("id")->on("biens")->onDelete("cascade");
-            $table->enum("type",["exterieur", "interieur"])->nullable(false);
-            $table->string("description")->nullable(true);
             $table->timestamps();
         });
     }

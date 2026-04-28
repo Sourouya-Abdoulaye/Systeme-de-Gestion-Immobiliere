@@ -1,178 +1,141 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+@extends('base')
+  <!-- CONTENT -->
 
-<title>Portail Immobilier National</title>
+@section('titre','listes des biens')
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-<style>
-  body { font-family: Inter, sans-serif; }
-</style>
-</head>
+@section('content')
+  <div class="max-w-7xl mx-auto px-4 py-8">
 
-<body class="bg-slate-50 text-slate-800">
+    <!-- HEADER -->
+    <div class="flex flex-col md:flex-row md:justify-between gap-4 mb-6">
 
-<!-- HEADER -->
-<header class="bg-gradient-to-r from-blue-950 via-blue-900 to-cyan-900 text-white">
-
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded bg-cyan-400"></div>
-      <h1 class="font-semibold text-sm sm:text-lg tracking-tight">
-        Agence Immobilière Nationale
+      <h1 class="text-3xl font-bold">
+        Biens disponibles
       </h1>
+
+      <!-- SEARCH -->
+      <form method="GET" class="flex gap-2">
+        <input type="text" name="search" placeholder="Rechercher..."
+          class="px-4 py-2 rounded-xl border dark:bg-gray-800 dark:border-gray-700">
+
+        <button class="bg-orange-500 text-white px-4 rounded-xl">
+          🔍
+        </button>
+      </form>
+
     </div>
 
-    <nav class="hidden md:flex gap-8 text-sm text-blue-100">
-      <a class="hover:text-white" href="#">Accueil</a>
-      <a class="hover:text-white" href="#">Biens</a>
-      <a class="hover:text-white" href="#">Services</a>
-      <a class="hover:text-white" href="#">Contact</a>
-      <a class="hover:text-white" href="{{route('dashboard')}}">Dasboard</a>
-	  <a class="hover:text-white" href="/login">Se connecter</a>
-    </nav>
+    <!-- FILTERS -->
+    <form method="GET" class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow mb-6 grid md:grid-cols-4 gap-4">
 
-    <button onclick="toggleMenu()" class="md:hidden text-2xl">☰</button>
+      <input type="text" name="ville" placeholder="Ville"
+        class="border rounded-lg px-3 py-2 dark:bg-gray-900 dark:border-gray-700">
 
-  </div>
+      <select name="type" class="border rounded-lg px-3 py-2 dark:bg-gray-900 dark:border-gray-700">
+        <option value="">Type</option>
+        <option>Maison</option>
+        <option>Terrain</option>
+        <option>Appartement</option>
+      </select>
 
-  <!-- MOBILE MENU -->
-  <div id="mobileMenu" class="hidden md:hidden bg-blue-950 border-t border-blue-800">
-    <div class="flex flex-col px-4 py-3 text-sm text-blue-100">
-      <a class="py-3 border-b border-blue-800">Accueil</a>
-      <a class="py-3 border-b border-blue-800">Biens</a>
-      <a class="py-3 border-b border-blue-800">Services</a>
-      <a class="py-3">Contact</a>
-	  <a class="hover:text-white" href="/login">Se connecter</a>
-    </div>
-  </div>
+      <input type="number" name="min" placeholder="Prix min"
+        class="border rounded-lg px-3 py-2 dark:bg-gray-900 dark:border-gray-700">
 
-</header>
+      <input type="number" name="max" placeholder="Prix max"
+        class="border rounded-lg px-3 py-2 dark:bg-gray-900 dark:border-gray-700">
 
-<!-- HERO -->
-<section class="relative bg-gradient-to-b from-blue-50 to-white">
+      <button class="bg-orange-500 text-white py-2 rounded-xl col-span-full md:col-span-1">
+        Filtrer
+      </button>
 
-  <div class="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
+    </form>
 
-    <div>
 
-      <div class="inline-block px-3 py-1 text-xs bg-cyan-100 text-cyan-800 rounded-full mb-4">
-        Portail officiel sécurisé
+
+    <!-- GRID -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      @foreach($biens as $bien)
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
+
+        <!-- IMAGE -->
+        <a href="{{ route('biens.show', $bien->id) }}">
+          <div class="relative h-48">
+            <img src="{{ asset('storage/'.$bien->images->first()->url ?? '') }}" class="w-full h-full object-cover">
+
+            <span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+              {{ $bien->statut }}
+            </span>
+
+            <button onclick="event.preventDefault(); toggleFav({{ $bien->id }}, this)"
+              class="absolute top-2 right-2 bg-white p-2 rounded-full shadow text-gray-400">
+              ❤️
+            </button>
+          </div>
+        </a>
+
+        <!-- CONTENT -->
+        <div class="p-4">
+
+          <h2 class="font-semibold truncate">{{ $bien->titre }}</h2>
+
+          <p class="text-sm text-gray-500">
+            📍 {{ $bien->ville }}
+          </p>
+
+          <p class="text-orange-500 font-bold text-lg mt-2">
+            {{ number_format($bien->prix, 0, ',', ' ') }} FCFA
+          </p>
+
+          <!-- ACTIONS -->
+          <div class="mt-3 space-y-2">
+
+            <a href="https://wa.me/{{ $bien->user->phone ?? '22890000000' }}?text=Bonjour, je suis intéressé par {{ urlencode($bien->titre) }}"
+              target="_blank" class="block text-center bg-green-500 text-white py-2 rounded-xl">
+              WhatsApp
+            </a>
+
+            <button onclick="openVisitModal({{ $bien->id }})" class="w-full bg-orange-500 text-white py-2 rounded-xl">
+              Visite
+            </button>
+
+          </div>
+
+        </div>
+
       </div>
+      @endforeach
 
-      <h2 class="text-3xl sm:text-5xl font-semibold leading-tight text-blue-950">
-        Accès intelligent et sécurisé au logement national
-      </h2>
+    </div>
 
-      <p class="mt-4 text-slate-600 leading-7 text-sm sm:text-base">
-        Plateforme moderne de gestion immobilière de l’État, offrant transparence,
-        performance et accessibilité à tous les citoyens.
-      </p>
+    <!-- PAGINATION -->
+    <div class="mt-8">
+      {{ $biens->links() }}
+    </div>
 
-      <button class="mt-6 bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-xl shadow-md">
-        Explorer les biens
+  </div>
+
+   <!-- MODAL VISITE -->
+  <div id="visitModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
+
+    <div class="bg-white p-6 rounded-xl w-80">
+
+      <h2 class="text-lg font-semibold mb-3">Demande de visite</h2>
+
+      <input type="date" class="border p-2 w-full mb-3">
+
+      <button onclick="closeModal()" class="bg-orange-500 text-white px-4 py-2 w-full rounded">
+        Envoyer
       </button>
 
     </div>
-
-    <!-- IMAGE CARD -->
-    <div class="relative">
-      <img
-        src="https://images.unsplash.com/photo-1560518883-ce09059eeffa"
-        class="rounded-2xl shadow-2xl"
-      />
-
-      <div class="absolute -bottom-6 -left-6 bg-white shadow-lg rounded-xl p-4 w-40">
-        <p class="text-blue-900 font-semibold text-lg">1 250+</p>
-        <p class="text-xs text-slate-500">Biens actifs</p>
-      </div>
-
-    </div>
-
   </div>
 
-</section>
-
-<!-- STATS -->
-<section class="max-w-7xl mx-auto px-4 py-12">
-
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-
-    <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-cyan-500">
-      <p class="text-2xl font-semibold text-blue-950">1 250+</p>
-      <p class="text-slate-500 text-sm">Biens enregistrés</p>
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-blue-600">
-      <p class="text-2xl font-semibold text-blue-950">320+</p>
-      <p class="text-slate-500 text-sm">Transactions réalisées</p>
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-cyan-500">
-      <p class="text-2xl font-semibold text-blue-950">15</p>
-      <p class="text-slate-500 text-sm">Régions couvertes</p>
-    </div>
-
+  <!-- TOAST -->
+  <div id="toast" class="hidden fixed bottom-5 right-5 bg-black text-white px-4 py-2 rounded">
+    Action réussie
   </div>
+@endsection
+ 
 
-</section>
-
-<!-- SECTION TITLE -->
-<section class="max-w-7xl mx-auto px-4">
-  <h3 class="text-2xl font-semibold text-blue-950">
-    Biens disponibles
-  </h3>
-</section>
-
-<!-- PROPERTIES -->
-<section class="max-w-7xl mx-auto px-4 py-8">
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-    <div class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
-
-      <img
-        src="https://images.unsplash.com/photo-1570129477492-45c003edd2be"
-        class="h-48 w-full object-cover"
-      />
-
-      <div class="p-5">
-
-        <h4 class="font-semibold text-blue-950">Villa moderne</h4>
-        <p class="text-sm text-slate-500 mt-1">Lomé - 3 chambres</p>
-
-        <p class="text-cyan-600 font-semibold mt-3">
-          120 000 000 FCFA
-        </p>
-
-        <button class="mt-4 w-full bg-blue-900 hover:bg-blue-800 text-white py-2 rounded-xl">
-          Détails
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-blue-950 text-blue-200 text-center py-6 text-sm mt-10">
-  © 2026 Portail Immobilier National — Tous droits réservés
-</footer>
-
-<!-- JS -->
-<script>
-function toggleMenu() {
-  document.getElementById("mobileMenu").classList.toggle("hidden");
-}
-</script>
-
-</body>
-</html>
+ 
